@@ -14,7 +14,7 @@
     "@astrojs/db": "^0.14.1",
     "@astrojs/vercel": "^7.8.1",
     "astro": "^4.15.9",
-    "better-auth": "^0.0.10-beta.17",
+    "better-auth": "^0.0.10-beta.18",
     "typescript": "^5.6.2"
   }
 }

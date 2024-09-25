@@ -13,6 +13,9 @@ import { actions } from 'astro:actions';
 	<body>
 		<h1>Astro</h1>
 		<form method="post" action={actions.auth.signUpUser}>
+			<label for="name">Name
+				<input type="text" id="name" name="name" />
+			</label>
 			<label for="email">Email
 				<input type="text" id="email" name="email" />
 			</label>
