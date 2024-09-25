@@ -1,5 +1,5 @@
 ---
-
+import { actions } from 'astro:actions';
 ---
 
 <html lang="en">
@@ -12,5 +12,14 @@
 	</head>
 	<body>
 		<h1>Astro</h1>
+		<form method="post" action={actions.auth.signUpUser}>
+			<label for="email">Email
+				<input type="text" id="email" name="email" />
+			</label>
+			<label for="password">Password
+				<input type="password" id="password" name="password" />
+			</label>
+			<button type="submit">Sign in</button>
+		</form>
 	</body>
 </html>
