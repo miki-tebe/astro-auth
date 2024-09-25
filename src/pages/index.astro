@@ -12,10 +12,21 @@ import { actions } from 'astro:actions';
 	</head>
 	<body>
 		<h1>Astro</h1>
+		<h1>SignUp</h1>
 		<form method="post" action={actions.auth.signUpUser}>
 			<label for="name">Name
 				<input type="text" id="name" name="name" />
 			</label>
+			<label for="email">Email
+				<input type="text" id="email" name="email" />
+			</label>
+			<label for="password">Password
+				<input type="password" id="password" name="password" />
+			</label>
+			<button type="submit">Sign in</button>
+		</form>
+		<h1>SignIn</h1>
+		<form method="post" action={actions.auth.signInUser}>
 			<label for="email">Email
 				<input type="text" id="email" name="email" />
 			</label>
