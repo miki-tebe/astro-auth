@@ -1,0 +1,41 @@
+---
+import { client } from "../lib/auth-client";
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const email = data.get("email");
+    const password = data.get("password");
+	if (email && password) {
+	  client.signIn.email(
+		{ email: email.toString(), password: password.toString() }, 
+	  {
+		onError(context) {
+		  console.log(context.error);
+		},
+        onSuccess(context) {
+          console.log(context);
+        }
+	  }
+	);
+	} else {
+	  throw new Error("Form data is incomplete.");
+	}
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+---
+
+<h1>SignIn</h1>
+<form method="post">
+    <label for="email">Email
+        <input type="text" id="email" name="email" required />
+    </label>
+    <label for="password">Password
+        <input type="password" id="password" name="password" required />
+    </label>
+    <button type="submit">Sign in</button>
+</form>

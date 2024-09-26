@@ -1,4 +1,4 @@
-import { defineAction } from "astro:actions";
+import { defineAction, ActionError } from "astro:actions";
 import { z } from "astro:schema";
 import { client } from "../lib/auth-client";
 
@@ -12,14 +12,18 @@ export const auth = {
     }),
     handler: async ({ email, password, name }) => {
       console.log(email, password, name);
-      try {
-        const res = await client.signUp.email({ email, password, name });
-        console.log(res);
-        return res;
-      } catch (error) {
-        console.log(error);
-        return error;
-      }
+      const res = await client.signUp.email(
+        { email, password, name },
+        {
+          onError(context) {
+            console.log(context);
+            throw new ActionError({
+              code: "BAD_REQUEST",
+              message: context.error.message,
+            });
+          },
+        }
+      );
     },
   }),
   signInUser: defineAction({
@@ -29,14 +33,18 @@ export const auth = {
       password: z.string(),
     }),
     handler: async ({ email, password }) => {
-      try {
-        const res = await client.signIn.email({ email, password });
-        console.log(res);
-        return res;
-      } catch (error) {
-        console.log(error);
-        return error;
-      }
+      const res = await client.signIn.email(
+        { email, password },
+        {
+          onError(context) {
+            console.log(context);
+            throw new ActionError({
+              code: "BAD_REQUEST",
+              message: context.error.message,
+            });
+          },
+        }
+      );
     },
   }),
 };
