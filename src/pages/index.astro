@@ -14,4 +14,16 @@
 		<a href="/register"><button>SignUp</button></a>   
 		<a href="/login"><button>Login</button></a>   
 	</body>
+	<script>
+		import { useVanillaSession } from "../lib/auth-client";
+		useVanillaSession.subscribe((val) => {
+		  if (val.data) {
+			console.log(val.data);
+		  } else {
+			if(val.error){
+			  console.log(val.error);
+			}
+		  }
+		}); 
+	  </script> 
 </html>
