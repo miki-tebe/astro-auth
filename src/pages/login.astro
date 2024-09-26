@@ -1,32 +1,5 @@
 ---
-import { client } from "../lib/auth-client";
 
-if (Astro.request.method === "POST") {
-  try {
-    const data = await Astro.request.formData();
-    const email = data.get("email");
-    const password = data.get("password");
-	if (email && password) {
-	  client.signIn.email(
-		{ email: email.toString(), password: password.toString() }, 
-	  {
-		onError(context) {
-		  console.log(context.error);
-		},
-        onSuccess(context) {
-          console.log(context);
-        }
-	  }
-	);
-	} else {
-	  throw new Error("Form data is incomplete.");
-	}
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.message);
-    }
-  }
-}
 ---
 
 <h1>SignIn</h1>
@@ -37,5 +10,18 @@ if (Astro.request.method === "POST") {
     <label for="password">Password
         <input type="password" id="password" name="password" required />
     </label>
-    <button type="submit">Sign in</button>
+    <button id="login" type="submit">Sign in</button>
 </form>
+<script>
+    import { client } from "../lib/auth-client";
+
+    const login = document.getElementById('login');
+    if (login) {
+        login.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = (document.getElementById('email') as HTMLInputElement)?.value;
+            const password = (document.getElementById('password') as HTMLInputElement)?.value;
+            await client.signIn.email({ email, password, callbackURL: '/dashboard' });
+        });
+    }
+</script>
